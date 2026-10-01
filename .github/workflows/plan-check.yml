@@ -1,0 +1,31 @@
+name: plan-check
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: write # the verdict comment (fork PRs get a read-only token: summary only)
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
+
+      - uses: hashicorp/setup-terraform@b9cd54a3c349d3f38e8881555d616ced269862dd # v3.1.2
+        with:
+          terraform_wrapper: false
+
+      - name: Terraform plan (fake credentials, no refresh, never applied)
+        working-directory: infra
+        run: |
+          terraform init -input=false
+          terraform plan -input=false -refresh=false -lock=false -out=tfplan
+
+      - name: Aegis-DevOps plan check
+        uses: moneytool/aegis-devops-action@v1
+        with:
+          plan: tfplan
+          working-directory: infra
+          config-dir: ../.aegis

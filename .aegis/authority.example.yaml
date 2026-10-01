@@ -1,0 +1,13 @@
+# Which principal may assert which class of constraint.
+# Loaded via aegis_core.authority.load_authority_map(path).
+principals:
+  admin:
+    - scaling
+    - deletion
+    - configuration
+    - identity       # may change agents.yaml, the identity model
+  sre_lead:
+    - scaling
+    - configuration
+  developer:
+    - configuration
