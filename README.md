@@ -24,7 +24,9 @@ The `plan-check` workflow plans the change, and Aegis blocks it:
 > Decided by: `plan-no-db-deletes`
 > - max_matching: 1 delete/replace > 0
 
-The check fails, so a branch rule requiring it keeps the PR from being merged. Change something
+**A red ❌ on the check is the demo working:** Aegis blocked the change, and because the check
+fails, a branch rule requiring it keeps the PR from being merged (see the open
+[example PR](https://github.com/moneytool/aegis-devops-demo/pull/1)). Change something
 harmless instead, such as adding another `aws_s3_bucket`, and the same check passes.
 
 ## How it works
